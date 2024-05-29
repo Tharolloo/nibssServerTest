@@ -1,4 +1,4 @@
-name: Deploy Nibbs server test to ec2
+name: Deploy Nibbs server test to EC2
 
 on:
   push:
@@ -62,7 +62,8 @@ jobs:
 
     - name: Sync environment variables from S3
       run: |
-        aws s3 sync s3://karrabo/nibsstest.env /tmp/env
+        mkdir -p /tmp/env
+        aws s3 sync s3://karrabo/nibbstest.env /tmp/env
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -71,9 +72,9 @@ jobs:
     - name: Deploy to EC2
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.AWS_EC2_USER }}@${{ secrets.AWS_EC2_HOST }} << 'EOF'
-          $(aws ecr get-login --no-include-email --region ${{ secrets.AWS_REGION }})
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
           sudo docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
-          sudo docker run -d --name nibssServerTest --env-file /tmp/env/.env -p 8080:8080 ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+          sudo docker run -d --name nibssServerTest --env-file /tmp/env/nibbstest.env -p 8080:8080 ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
         EOF
       env:
         AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
