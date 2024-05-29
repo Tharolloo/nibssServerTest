@@ -30,7 +30,6 @@ CMD ["java", "-jar", "nibssservertest.jar"]
 
 
 
-
 # FROM maven:3.8.7 as build
 
 # COPY . .
