@@ -63,7 +63,7 @@ jobs:
     - name: Sync environment variables from S3
       run: |
         mkdir -p /tmp/env
-        aws s3 sync s3://karrabo/nibbstest.env /tmp/env
+        aws s3 sync s3://karrabo/nibsstest.env /tmp/env
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
