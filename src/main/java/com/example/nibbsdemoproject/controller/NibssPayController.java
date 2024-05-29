@@ -26,8 +26,8 @@ public class NibssPayController {
         return ResponseEntity.status(HttpStatus.OK).body(addDebitAccountResponse);
     }
 
-    @PostMapping("getAcccesToken")
-    public ResponseEntity<?> getAccesToken(@RequestBody GetAccessTokenRequest request){
+    @PostMapping("getAccessToken")
+    public ResponseEntity<?> getAccessToken(@RequestBody GetAccessTokenRequest request){
         NibssAuthenticationResponse accessToken = nibssPayPlus.getAccessToken(request);
         return ResponseEntity.status(HttpStatus.OK).body(accessToken);
     }
