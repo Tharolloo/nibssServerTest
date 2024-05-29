@@ -7,6 +7,7 @@ RUN mvn -B clean package -DskipTests
 FROM openjdk:18
 
 #COPY --from=build target/*.jar nibssdemoproject.jar
-COPY nibbsDemoProject.jar nibbsDemoProject.jar
+COPY nibssDemoProject.jar nibssDemoProject.jar
 
-ENTRYPOINT ["java", "-jar", "-Dserver.port=8080", "-Dspring.profiles.active=dev", "nisbsdemoproject.jar"]
+ENTRYPOINT ["java", "-jar", "-Dserver.port=8080", "-Dspring.profiles.active=dev", "nibssdemoproject.jar"]
+
