@@ -4,7 +4,7 @@ COPY . .
 
 RUN mvn -B clean package -DskipTests
 
-FROM openjdk:21
+FROM openjdk:18
 
 COPY --from=build target/*.jar nibbsdemoproject.jar
 
