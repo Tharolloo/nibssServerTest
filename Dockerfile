@@ -1,45 +1,45 @@
-# Use a base image with Java and Maven pre-installed
-FROM maven:3.8.4-openjdk-19 AS builder
+# # Use a base image with Java and Maven pre-installed
+# FROM maven:3.8.4-openjdk-19 AS builder
 
-# Set the working directory in the container
-WORKDIR /app
+# # Set the working directory in the container
+# WORKDIR /app
 
-# Copy the Maven project file
-COPY pom.xml .
+# # Copy the Maven project file
+# COPY pom.xml .
 
-# Copy the source code
-COPY src ./src
+# # Copy the source code
+# COPY src ./src
 
-# Build the application
-RUN mvn package -DskipTests
+# # Build the application
+# RUN mvn package -DskipTests
 
-# Use a lightweight base image with Java pre-installed
-FROM adoptopenjdk/openjdk19:alpine-jre
+# # Use a lightweight base image with Java pre-installed
+# FROM adoptopenjdk/openjdk19:alpine-jre
 
-# Set the working directory in the container
-WORKDIR /app
+# # Set the working directory in the container
+# WORKDIR /app
 
-# Copy the built JAR file from the builder stage
-COPY --from=builder /app/target/nibssdemoproject.jar .
+# # Copy the built JAR file from the builder stage
+# COPY --from=builder /app/target/nibssdemoproject.jar .
 
-# Expose the port the application runs on
-EXPOSE 8080
+# # Expose the port the application runs on
+# EXPOSE 8080
 
-# Set the default command to run the application
-CMD ["java", "-jar", "nibssservertest.jar"]
+# # Set the default command to run the application
+# CMD ["java", "-jar", "nibssservertest.jar"]
 
 
 
-# FROM maven:3.8.7 as build
+FROM maven:3.8.7 as build
 
-# COPY . .
+COPY . .
 
-# RUN mvn -B clean package -DskipTests
+RUN mvn -B clean package -DskipTests
 
-# FROM openjdk:17
+FROM openjdk:17
 
-# COPY --from=build target/*.jar nibbsservertest.jar
+COPY --from=build target/*.jar nibbsservertest.jar
 
-# #ENV SPRING_PROFILES_ACTIVE=${PROFILE}
+#ENV SPRING_PROFILES_ACTIVE=${PROFILE}
 
-# ENTRYPOINT ["java", "-jar", "-Dserver.port=8080", "nibbsservertest.jar"]
+ENTRYPOINT ["java", "-jar", "-Dserver.port=8080", "nibbsservertest.jar"]
