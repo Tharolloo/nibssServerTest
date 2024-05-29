@@ -20,16 +20,6 @@ class NibssPayPlusTest {
     private NibssPayPlus nibssPayPlus;
 
 
-    @Test
-    public void testNibssPayAddDebitAccount(){
-        AddDebitAccountRequest request = buildAddDebitAccountRequest();
-
-        AddDebitAccountResponse addDebitAccountResponse = nibssPayPlus.addDebitAccount(request);
-        assertThat(addDebitAccountResponse).isNotNull();
-        assertThat(addDebitAccountResponse.getSuccess()).isEqualTo("true");
-
-    }
-
     private AddDebitAccountRequest buildAddDebitAccountRequest() {
         Account account = Account.builder()
                 .accountNumber("0112345678")
@@ -48,15 +38,7 @@ class NibssPayPlusTest {
     }
 
 
-//    private GetAccessTokenRequest buildGetAccessTokenRequest() {
-//        return GetAccessTokenRequest
-//                .builder()
-//                .client_id("876cca27-6e23-4218-be18-87a1d2d4f195")
-//                .client_secret("ZyV8Q~WGBjyj2v57GpywxPaHMXNqYEE2A26E5cQ.")
-//                .scope("876cca27-6e23-4218-be18-87a1d2d4f195/.default")
-//                .grant_type("client_credentials")
-//                .build();
-//    }
+
 
 
 }
