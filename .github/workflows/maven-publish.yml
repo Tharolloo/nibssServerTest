@@ -1,3 +1,45 @@
+# name: Java CI with Maven
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+
+
+#   test:
+#     name: Unit Test
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: Set up JDK 17
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: 17
+#       - name: Maven Package
+#         run: mvn -B clean package -DskipTests
+#       - name: Maven Verify
+#         run: mvn -B clean verify
+
+#   build:
+
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Set up JDK 17
+#       uses: actions/setup-java@v3
+#       with:
+#         java-version: '17'
+#         distribution: 'temurin'
+#         cache: maven
+#     - name: Build with Maven
+#       run: mvn -B package --file pom.xml
+
+
 name: Java CI with Maven
 
 on:
@@ -7,8 +49,6 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-
   test:
     name: Unit Test
     runs-on: ubuntu-latest
@@ -19,13 +59,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+      - name: Create secret.properties
+        run: echo "${{ secrets.SECRET_PROPERTIES }}" > src/main/resources/secret.properties
       - name: Maven Package
         run: mvn -B clean package -DskipTests
       - name: Maven Verify
         run: mvn -B clean verify
 
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -36,5 +77,8 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Create secret.properties
+      run: echo "${{ secrets.SECRET_PROPERTIES }}" > src/main/resources/secret.properties
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
