@@ -7,6 +7,23 @@ RUN mvn -B clean package -DskipTests
 FROM openjdk:18
 
 #COPY --from=build target/*.jar nibssdemoproject.jar
-COPY nibbsDemoProject.jar nibbsDemoProject.jar
 
-ENTRYPOINT ["java", "-jar", "-Dserver.port=8080", "-Dspring.profiles.active=dev", "nisbsdemoproject.jar"]
+
+#ENTRYPOINT ["java", "-jar", "-Dserver.port=8080", "-Dspring.profiles.active=dev", "nisbsdemoproject.jar"]
+
+
+# Use a base image with Java installed
+#FROM adoptopenjdk:18-jdk-hotspot
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the Spring Boot application JAR file into the container
+COPY target/nibssDemoProject.jar /app/nibssDemoProject.jar
+
+# Expose the port that your Spring Boot application runs on
+EXPOSE 8080
+
+# Command to run the Spring Boot application when the container starts
+CMD ["java", "-jar", "nibssDemoProject.jar"]
+
