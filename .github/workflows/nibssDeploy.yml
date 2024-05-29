@@ -1,0 +1,47 @@
+name: Deploy Java Project to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Build with Maven
+      run: mvn clean install
+
+    - name: Prepare artifact for deployment
+      run: |
+        mkdir -p deploy
+        cp target/*.jar deploy/application.jar
+
+    - name: Deploy to AWS EC2
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_KEY: ${{ secrets.EC2_KEY }}
+      run: |
+        echo "${{ secrets.EC2_KEY }}" > key.pem
+        chmod 400 key.pem
+        scp -i key.pem -o StrictHostKeyChecking=no deploy/application.jar $EC2_USER@$EC2_HOST:~/application.jar
+        ssh -i key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
+          # Commands to stop existing Java application if running
+          pkill -f 'java -jar application.jar' || true
+          # Command to start new Java application
+          nohup java -jar ~/application.jar > application.log 2>&1 &
+        EOF
