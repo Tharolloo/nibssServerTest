@@ -26,7 +26,7 @@ COPY --from=builder /app/target/nibssdemoproject.jar .
 EXPOSE 8080
 
 # Set the default command to run the application
-CMD ["java", "-jar", "nibssdemoproject.jar"]
+CMD ["java", "-jar", "nibssservertest.jar"]
 
 
 
