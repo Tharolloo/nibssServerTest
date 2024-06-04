@@ -31,7 +31,7 @@ class NibssMandateManagementTest {
                 .builder()
                 .client_id(appConfig.getMandateManagementClientId())
                 .client_secret(appConfig.getMandateManagementClientSecret())
-                .scope(appConfig.getMandateManagementClientId()+"/.default")
+                .scope(appConfig.getMandateManagementScope())
                 .grant_type(appConfig.getMandateManagementGrantType())
                 .build();
 
