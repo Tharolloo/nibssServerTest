@@ -1,4 +1,4 @@
-package com.example.nibbsdemoproject.dto.nibssResponse;
+package com.example.nibbsdemoproject.nibssPayPlus.dto.nibssResponse;
 
 import lombok.Getter;
 import lombok.Setter;

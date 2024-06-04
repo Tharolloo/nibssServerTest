@@ -1,10 +1,11 @@
-package com.example.nibbsdemoproject.controller;
+package com.example.nibbsdemoproject.nibssPayPlus.controller;
 
-import com.example.nibbsdemoproject.dto.nibssRequest.AddDebitAccountRequest;
-import com.example.nibbsdemoproject.dto.nibssRequest.GetAccessTokenRequest;
-import com.example.nibbsdemoproject.dto.nibssResponse.AddDebitAccountResponse;
-import com.example.nibbsdemoproject.dto.nibssResponse.NibssAuthenticationResponse;
-import com.example.nibbsdemoproject.services.nibssService.interfaces.NibssPayPlus;
+import com.example.nibbsdemoproject.exception.KarraboException;
+import com.example.nibbsdemoproject.nibssPayPlus.dto.nibssRequest.GetAccessTokenRequest;
+import com.example.nibbsdemoproject.nibssPayPlus.dto.nibssResponse.AddDebitAccountResponse;
+import com.example.nibbsdemoproject.nibssPayPlus.dto.nibssResponse.NibssAuthenticationResponse;
+import com.example.nibbsdemoproject.nibssPayPlus.dto.nibssRequest.AddDebitAccountRequest;
+import com.example.nibbsdemoproject.nibssPayPlus.services.interfaces.NibssPayPlus;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,14 @@ public class NibssPayController {
     private final NibssPayPlus nibssPayPlus;
 
     @PostMapping("addDebitAccount")
-    public ResponseEntity<?> addDebitAccount(@RequestBody AddDebitAccountRequest request){
+    public ResponseEntity<?> addDebitAccount(@RequestBody AddDebitAccountRequest request) throws KarraboException {
         AddDebitAccountResponse addDebitAccountResponse = nibssPayPlus.addDebitAccount(request);
         return ResponseEntity.status(HttpStatus.OK).body(addDebitAccountResponse);
 
     }
 
     @PostMapping("getAccessToken")
-    public ResponseEntity<?> getAccessToken(@RequestBody GetAccessTokenRequest request){
+    public ResponseEntity<?> getAccessToken(@RequestBody GetAccessTokenRequest request) throws KarraboException {
         NibssAuthenticationResponse accessToken = nibssPayPlus.getAccessToken(request);
         return ResponseEntity.status(HttpStatus.OK).body(accessToken);
     }

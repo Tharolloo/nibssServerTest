@@ -1,4 +1,4 @@
-package com.example.nibbsdemoproject.dto.nibssRequest;
+package com.example.nibbsdemoproject.nibssPayPlus.dto.nibssRequest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

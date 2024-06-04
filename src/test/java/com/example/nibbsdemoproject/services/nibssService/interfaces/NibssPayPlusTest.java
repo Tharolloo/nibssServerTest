@@ -1,17 +1,14 @@
 package com.example.nibbsdemoproject.services.nibssService.interfaces;
 
-import com.example.nibbsdemoproject.dto.nibssRequest.Account;
-import com.example.nibbsdemoproject.dto.nibssRequest.AddDebitAccountRequest;
-import com.example.nibbsdemoproject.dto.nibssRequest.GetAccessTokenRequest;
-import com.example.nibbsdemoproject.dto.nibssResponse.AddDebitAccountResponse;
-import org.junit.jupiter.api.Test;
+import com.example.nibbsdemoproject.nibssPayPlus.dto.nibssRequest.Account;
+import com.example.nibbsdemoproject.nibssPayPlus.dto.nibssRequest.AddDebitAccountRequest;
+import com.example.nibbsdemoproject.nibssPayPlus.services.interfaces.NibssPayPlus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class NibssPayPlusTest {

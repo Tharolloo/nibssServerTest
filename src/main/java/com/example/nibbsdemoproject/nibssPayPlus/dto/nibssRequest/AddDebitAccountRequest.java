@@ -1,9 +1,9 @@
-package com.example.nibbsdemoproject.dto.nibssRequest;
+package com.example.nibbsdemoproject.nibssPayPlus.dto.nibssRequest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Setter;
+
 
 import java.util.List;
 
