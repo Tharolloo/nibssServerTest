@@ -65,13 +65,14 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.AWS_EC2_USER }}@${{ secrets.AWS_EC2_HOST }} << 'EOF'
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+          sudo docker stop nibssServerTest || true
+          sudo docker rm nibssServerTest || true
           sudo docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
-          sudo docker run -d --name nibssServerTest --env ${{ secrets.NIBSS_APIKEY }} -p 8080:8080 ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+          sudo docker run -d --name nibssServerTest -e NIBSS_APIKEY=${{ secrets.NIBSS_APIKEY }} -p 8080:8080 ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
         EOF
       env:
         AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
         EC2_USER: ${{ secrets.AWS_EC2_USER }}
         EC2_HOST: ${{ secrets.AWS_EC2_HOST }}
-        NIBSS_APIKEY: ${{ secrets.NIBSS_APIKEY }}
-
+    

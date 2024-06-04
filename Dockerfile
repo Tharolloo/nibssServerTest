@@ -19,11 +19,12 @@ FROM openjdk:18
 WORKDIR /app
 
 # Copy the Spring Boot application JAR file into the container
-COPY target/nibbs.jar /app/nibssDemoProject.jar
+
+COPY target/*.jar /app/nibbsDemoProject.jar
 
 # Expose the port that your Spring Boot application runs on
 EXPOSE 8080
 
 # Command to run the Spring Boot application when the container starts
-CMD ["java", "-jar", "nibssDemoProject.jar"]
+CMD ["java", "-jar", "nibbsDemoProject.jar"]
 
